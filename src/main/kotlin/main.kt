@@ -83,7 +83,7 @@ fun covidReportSummary(covidVaersData: Map<Int, VaersData>): Unit {
     println("******* COVID19 Vaccine Adverse Events Reported *******")
     println("Total: ${"%,d".format(covidVaersData.count())}")
     println("Deaths: ${"%,d".format(covidVaersData.keys.filter { covidVaersData[it]!!.died }.count())}")
-    println("Other: ${"%,d".format(covidVaersData.keys.filter { !covidVaersData[it]!!.died }.count())}")
+    println("Other Injuries: ${"%,d".format(covidVaersData.keys.filter { !covidVaersData[it]!!.died }.count())}")
     println("Hospitalization Required: ${"%,d".format(covidVaersData.keys.filter { covidVaersData[it]!!.hospital }.count())}")
     println("ER Visit Required: ${"%,d".format(covidVaersData.keys.filter { covidVaersData[it]!!.erVisit }.count())}")
 }

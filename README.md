@@ -21,6 +21,6 @@ From data downloaded February 22, 2021:
     ******* COVID19 Vaccine Adverse Events Reported *******
     Total: 5,214
     Deaths: 783
-    Other: 4,431
+    Other Injuries: 4,431
     Hospitalization Required: 1,713
     ER Visit Required: 3
