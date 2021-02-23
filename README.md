@@ -1,5 +1,21 @@
 # Vaccine Adverse Events Data Analysis for COVID19
 
+This is a very simple tool written in Kotlin that will correlate the VAERS ID
+for COVID19 vaccinations in the Vaccination dataset with the VAERS ID in the
+adverse events dataset and perform some simple aggregations on different
+adverse events.
+
+Future developments may product some tabular output.
+
+Sample output from data downloaded February 22, 2021:
+
+    ******* COVID19 Vaccine Adverse Events Reported *******
+    Total: 5,214
+    Deaths: 783
+    Other Injuries: 4,431
+    Hospitalization Required: 1,713
+    ER Visit Required: 3
+
 ## Fetch the datasets
 
 Download the VAERS DATA and VAERS Vaccine files from
@@ -14,13 +30,3 @@ Build and run the jar file:
     mvn compile assembly:single
     java -jar target/vaers-1.0-SNAPSHOT-jar-with-dependencies.jar
 
-## Sample Output
-
-From data downloaded February 22, 2021:
-
-    ******* COVID19 Vaccine Adverse Events Reported *******
-    Total: 5,214
-    Deaths: 783
-    Other Injuries: 4,431
-    Hospitalization Required: 1,713
-    ER Visit Required: 3
