@@ -3,7 +3,8 @@
 The United States Federal Government Department of Health and Human Services
 operates the Vaccine Adverse Event Reporting System. This is a voluntary reporting
 system for vaccine adverse events. It has been estimated that only 1% of
-vaccine adverse events are reported.
+vaccine adverse events are reported. That deserves a citation but I don't have
+one right now.
 
 This is a very simple tool written in Kotlin that will correlate the VAERS ID
 for COVID19 vaccinations in the Vaccination dataset with the VAERS ID in the
