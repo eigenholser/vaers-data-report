@@ -81,11 +81,11 @@ fun main(args: Array<String>) {
 
 fun covidReportSummary(covidVaersData: Map<Int, VaersData>): Unit {
     println("******* COVID19 Vaccine Adverse Events Reported *******")
-    println("Total: ${covidVaersData.count()}")
-    println("Deaths: ${covidVaersData.keys.filter { covidVaersData[it]!!.died }.count()}")
-    println("Other: ${covidVaersData.keys.filter { !covidVaersData[it]!!.died }.count()}")
-    println("Hospitalization Required: ${covidVaersData.keys.filter { covidVaersData[it]!!.hospital }.count()}")
-    println("ER Visit Required: ${covidVaersData.keys.filter { covidVaersData[it]!!.erVisit }.count()}")
+    println("Total: ${"%,d".format(covidVaersData.count())}")
+    println("Deaths: ${"%,d".format(covidVaersData.keys.filter { covidVaersData[it]!!.died }.count())}")
+    println("Other: ${"%,d".format(covidVaersData.keys.filter { !covidVaersData[it]!!.died }.count())}")
+    println("Hospitalization Required: ${"%,d".format(covidVaersData.keys.filter { covidVaersData[it]!!.hospital }.count())}")
+    println("ER Visit Required: ${"%,d".format(covidVaersData.keys.filter { covidVaersData[it]!!.erVisit }.count())}")
 }
 
 fun covidDataMap(vaersDataMap: Map<Int, VaersData>, vaersVaxMap: Map<Int, VaersVax>): Map<Int, VaersData> {
