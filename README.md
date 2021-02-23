@@ -5,7 +5,7 @@ for COVID19 vaccinations in the Vaccination dataset with the VAERS ID in the
 adverse events dataset and perform some simple aggregations on different
 adverse events.
 
-Future developments may product some tabular output.
+Future developments may produce some tabular output.
 
 Sample output from data downloaded February 22, 2021:
 
