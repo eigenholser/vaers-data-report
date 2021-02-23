@@ -1,5 +1,10 @@
 # Vaccine Adverse Events Data Analysis for COVID19
 
+The United States Federal Government department of Health and Human Services
+operates the Vaccine Adverse Event Reporting System. This is a voluntary reporting
+system for vaccine adverse events. It has been estimated that only 1% of
+vaccine adverse events are reported.
+
 This is a very simple tool written in Kotlin that will correlate the VAERS ID
 for COVID19 vaccinations in the Vaccination dataset with the VAERS ID in the
 adverse events dataset and perform some simple aggregations on different
