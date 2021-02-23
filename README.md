@@ -1,6 +1,6 @@
 # Vaccine Adverse Events Data Analysis for COVID19
 
-The United States Federal Government department of Health and Human Services
+The United States Federal Government Department of Health and Human Services
 operates the Vaccine Adverse Event Reporting System. This is a voluntary reporting
 system for vaccine adverse events. It has been estimated that only 1% of
 vaccine adverse events are reported.
