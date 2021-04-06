@@ -12,16 +12,23 @@ import java.util.stream.Collectors
 import java.util.stream.StreamSupport
 
 enum class VaxType {
+    ADEN_4_7, ANTH,
+    BCG,
     CHOL, COVID19,
-    DTAPHEPBIP, DT, DTAP,
-    FLU4, FLUX, FLU3, FLUC3, FLUC4, FLUR4, FLUA3, FLUA4,
-    HEP, HEPA, HIBV, HPV4, HPV9,
-    RV1,
-    MMR, MNQ,
-    PPV, PNC13,
-    TTOX, TDAP,
+    DF, DTAPIPVHIB, DTAPHEPBIP, DTAPIPV, DT, DTOX, DTP, DTAP,
+    FLU3, FLU4, FLUN3, FLUN4, FLUR3, FLUX, FLUC3, FLUC4, FLUR4, FLUA3, FLUA4,
+    HBHEPB, HEP, HEPA, HEPAB, HIBV, HPV2, HPV4, HPV9, HPVX,
+    IPV,
+    JEV1, JEVX,
+    MEN, MENB, MENHIB, MMR, MMRV, MNQ,
+    OPV,
+    PNC, PNC10, PPV, PNC13,
+    RAB, RV1, RV5, RVX, RUB,
+    SMALL,
+    TD, TDAP, TTOX, TYP,
     UNK,
-    VARZOS, VARCEL
+    VARZOS, VARCEL,
+    YF
 }
 
 data class VaersVax(
@@ -46,7 +53,7 @@ data class VaersData(
     val rptDate: LocalDate?,
     val died: Boolean,
     val dateDied: LocalDate?,
-    val lThreat: String?,
+    val lThreat: Boolean?,
     val erVisit: Boolean,
     val hospital: Boolean,
     val hospDays: Int?,
@@ -86,6 +93,7 @@ fun covidReportSummary(covidVaersData: Map<Int, VaersData>): Unit {
     println("Other Injuries: ${"%,d".format(covidVaersData.keys.filter { !covidVaersData[it]!!.died }.count())}")
     println("Hospitalization Required: ${"%,d".format(covidVaersData.keys.filter { covidVaersData[it]!!.hospital }.count())}")
     println("ER Visit Required: ${"%,d".format(covidVaersData.keys.filter { covidVaersData[it]!!.erVisit }.count())}")
+    println("Life Threatening Injury: ${"%,d".format(covidVaersData.keys.filter { covidVaersData[it]!!.lThreat!! }.count())}")
 }
 
 fun covidDataMap(vaersDataMap: Map<Int, VaersData>, vaersVaxMap: Map<Int, VaersVax>): Map<Int, VaersData> {
@@ -99,7 +107,7 @@ fun covidDataMap(vaersDataMap: Map<Int, VaersData>, vaersVaxMap: Map<Int, VaersV
 }
 
 fun parseVaersVax(): Map<Int, VaersVax> {
-    val csvData = BufferedReader(FileReader("src/main/resources/datasets/2021VAERSVAX.csv"))
+    val csvData = BufferedReader(FileReader("src/main/resources/datasets/VAERSVAX.csv"))
     val parser: CSVParser = CSVParser.parse(
         csvData, CSVFormat.RFC4180 //
             .withFirstRecordAsHeader() //
@@ -131,7 +139,7 @@ fun parseVaersVax(): Map<Int, VaersVax> {
 }
 
 fun parseVaersData(): Map<Int, VaersData> {
-    val csvData = BufferedReader(FileReader("src/main/resources/datasets/2021VAERSData.csv"))
+    val csvData = BufferedReader(FileReader("src/main/resources/datasets/VAERSData.csv"))
     val parser: CSVParser = CSVParser.parse(
         csvData, CSVFormat.RFC4180 //
             .withFirstRecordAsHeader() //
@@ -154,7 +162,7 @@ fun parseVaersData(): Map<Int, VaersData> {
                 if (it.get("RPT_DATE").isBlank()) null else stringToLocalDate(it.get("RPT_DATE")),
                 it.get("DIED")?.toLowerCase() == "y",
                 if (it.get("DATEDIED").isBlank()) null else stringToLocalDate(it.get("DATEDIED")),
-                it.get("L_THREAT"),
+                it.get("L_THREAT")?.toLowerCase() == "y",
                 it.get("ER_VISIT")?.toLowerCase() == "y",
                 it.get("HOSPITAL")?.toLowerCase() == "y",
                 if (it.get("HOSPDAYS").isBlank()) null else it.get("HOSPDAYS").toInt(),
@@ -188,6 +196,9 @@ fun parseVaersData(): Map<Int, VaersData> {
 }
 
 fun stringToLocalDate(date: String): LocalDate {
-    val formatter = DateTimeFormatter.ofPattern("MM/dd/yy", Locale.ENGLISH)
-    return LocalDate.parse(date, formatter)
+    return try {
+        LocalDate.parse(date, DateTimeFormatter.ofPattern("MM/dd/yy", Locale.ENGLISH))
+    } catch (e: Exception) {
+        LocalDate.parse(date, java.time.format.DateTimeFormatter.ofPattern("MM/dd/yyyy", java.util.Locale.ENGLISH))
+    }
 }

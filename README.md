@@ -15,11 +15,12 @@ Future developments may produce some tabular output.
 Sample output from data downloaded February 22, 2021:
 
     ******* COVID19 Vaccine Adverse Events Reported *******
-    Total: 5,214
-    Deaths: 783
-    Other Injuries: 4,431
-    Hospitalization Required: 1,713
-    ER Visit Required: 3
+    Total: 50,716
+    Deaths: 2,119
+    Other Injuries: 48,597
+    Hospitalization Required: 4,805
+    ER Visit Required: 29
+    Life Threatening: 1,441
 
 ## Fetch the datasets
 
@@ -27,6 +28,15 @@ Download the VAERS DATA and VAERS Vaccine files from
 [VAERS Datasets](https://vaers.hhs.gov/data/datasets.html)
 
 Save the datasets using the downloaded filename into `src/main/resources/datasets`.
+
+Save them as `VAERSData.csv` and `VAERSVAX.csv`. Combine 2020 and 2021 data
+by if you like. Remember to strip the one of the headers before appending the
+data.
+
+These cannot be downloaded by machine because of the CAPTCHA. Drat!
+
+The VaxType enum may be incomplete. If so, just add the enum exposed in the parse 
+exception and rebuild. If at first you don't succeed, try try again.
 
 ## Compile
 
