@@ -20,7 +20,7 @@ Sample output from data downloaded February 22, 2021:
     Other Injuries: 48,597
     Hospitalization Required: 4,805
     ER Visit Required: 29
-    Life Threatening: 1,441
+    Life Threatening Injury: 1,441
 
 ## Fetch the datasets
 
