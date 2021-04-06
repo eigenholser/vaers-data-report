@@ -12,7 +12,7 @@ adverse events.
 
 Future developments may produce some tabular output.
 
-Sample output from data downloaded February 22, 2021:
+Sample output from data 2020 through April 5, 2021:
 
     ******* COVID19 Vaccine Adverse Events Reported *******
     Total: 50,716
@@ -30,7 +30,7 @@ Download the VAERS DATA and VAERS Vaccine files from
 Save the datasets using the downloaded filename into `src/main/resources/datasets`.
 
 Save them as `VAERSData.csv` and `VAERSVAX.csv`. Combine 2020 and 2021 data
-by if you like. Remember to strip the one of the headers before appending the
+by if you like. Remember to strip the headers before appending the
 data.
 
 These cannot be downloaded by machine because of the CAPTCHA. Drat!
