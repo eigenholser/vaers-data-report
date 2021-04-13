@@ -12,15 +12,31 @@ adverse events.
 
 Future developments may produce some tabular output.
 
-Sample output from data 2020 through April 5, 2021:
+Sample output from data 2020 through April 13, 2021:
 
-    ******* COVID19 Vaccine Adverse Events Reported *******
-    Total: 50,716
-    Deaths: 2,119
-    Other Injuries: 48,597
-    Hospitalization Required: 4,805
-    ER Visit Required: 29
-    Life Threatening Injury: 1,441
+******* All COVID19 Vaccine Adverse Events Reported *******
+Total: 50,716
+Deaths: 2,119
+Non-fatal Injuries: 48,597
+Hospitalization Required: 4,805
+ER Visit Required: 29
+Life Threatening Injury: 1,441
+
+******* Q1 2021 COVID19 Vaccine Adverse Events Reported *******
+Total: 40,044
+Deaths: 2,103
+Non-fatal Injuries: 37,941
+Hospitalization Required: 4,665
+ER Visit Required: 11
+Life Threatening Injury: 1,373
+
+******* Q1 2020 All Vaccine Adverse Events Reported *******
+Total: 8,300
+Deaths: 33
+Non-fatal Injuries: 8,267
+Hospitalization Required: 379
+ER Visit Required: 43
+Life Threatening Injury: 55
 
 ## Fetch the datasets
 

@@ -79,34 +79,93 @@ data class VaersData(
     val allergies: String
 )
 
+fun String.toLocalDate() =
+    LocalDate.parse(this, DateTimeFormatter.ISO_DATE)
+
 fun main(args: Array<String>) {
-    val vaersVaxMap = parseVaersVax()
-    val vaersDataMap = parseVaersData()
-    val covidVaersData = covidDataMap(vaersDataMap, vaersVaxMap)
+    val vaersVaxMapCovid = parseVaersVax(listOf(VaxType.COVID19))
+    val vaersVaxMapAll = parseVaersVax(null)
+
+    val vaersDataMapCovid = parseVaersData(null)
+    val q12020vaersDataMapAll = parseVaersData(Pair("2020-01-01".toLocalDate(), "2020-03-31".toLocalDate()))
+    val q12021VaersDataMapCovid = parseVaersData(Pair("2021-01-01".toLocalDate(), "2021-03-31".toLocalDate()))
+
+    val covidVaersData = vaersDataMap(vaersDataMapCovid, vaersVaxMapCovid)
+    val q12020VaersData = vaersDataMap(q12020vaersDataMapAll, vaersVaxMapAll)
+    val q12021VaersDataCovid = vaersDataMap(q12021VaersDataMapCovid, vaersVaxMapCovid)
     covidReportSummary(covidVaersData)
+    q12021CovidReportSummary(q12021VaersDataCovid)
+    q12020ReportSummary(q12020VaersData)
 }
 
 fun covidReportSummary(covidVaersData: Map<Int, VaersData>): Unit {
-    println("******* COVID19 Vaccine Adverse Events Reported *******")
+    println("******* All COVID19 Vaccine Adverse Events Reported *******")
     println("Total: ${"%,d".format(covidVaersData.count())}")
     println("Deaths: ${"%,d".format(covidVaersData.keys.filter { covidVaersData[it]!!.died }.count())}")
-    println("Other Injuries: ${"%,d".format(covidVaersData.keys.filter { !covidVaersData[it]!!.died }.count())}")
-    println("Hospitalization Required: ${"%,d".format(covidVaersData.keys.filter { covidVaersData[it]!!.hospital }.count())}")
+    println("Non-fatal Injuries: ${"%,d".format(covidVaersData.keys.filter { !covidVaersData[it]!!.died }.count())}")
+    println(
+        "Hospitalization Required: ${
+            "%,d".format(covidVaersData.keys.filter { covidVaersData[it]!!.hospital }.count())
+        }"
+    )
     println("ER Visit Required: ${"%,d".format(covidVaersData.keys.filter { covidVaersData[it]!!.erVisit }.count())}")
-    println("Life Threatening Injury: ${"%,d".format(covidVaersData.keys.filter { covidVaersData[it]!!.lThreat!! }.count())}")
+    println(
+        "Life Threatening Injury: ${
+            "%,d".format(covidVaersData.keys.filter { covidVaersData[it]!!.lThreat!! }.count())
+        }"
+    )
+    println()
 }
 
-fun covidDataMap(vaersDataMap: Map<Int, VaersData>, vaersVaxMap: Map<Int, VaersVax>): Map<Int, VaersData> {
-    val covidVaersData: MutableMap<Int, VaersData> = HashMap<Int, VaersData>()
+fun q12021CovidReportSummary(covidVaersData: Map<Int, VaersData>): Unit {
+    println("******* Q1 2021 COVID19 Vaccine Adverse Events Reported *******")
+    println("Total: ${"%,d".format(covidVaersData.count())}")
+    println("Deaths: ${"%,d".format(covidVaersData.keys.filter { covidVaersData[it]!!.died }.count())}")
+    println("Non-fatal Injuries: ${"%,d".format(covidVaersData.keys.filter { !covidVaersData[it]!!.died }.count())}")
+    println(
+        "Hospitalization Required: ${
+            "%,d".format(covidVaersData.keys.filter { covidVaersData[it]!!.hospital }.count())
+        }"
+    )
+    println("ER Visit Required: ${"%,d".format(covidVaersData.keys.filter { covidVaersData[it]!!.erVisit }.count())}")
+    println(
+        "Life Threatening Injury: ${
+            "%,d".format(covidVaersData.keys.filter { covidVaersData[it]!!.lThreat!! }.count())
+        }"
+    )
+    println()
+}
+
+fun q12020ReportSummary(vaersData: Map<Int, VaersData>) {
+    println("******* Q1 2020 All Vaccine Adverse Events Reported *******")
+    println("Total: ${"%,d".format(vaersData.count())}")
+    println("Deaths: ${"%,d".format(vaersData.keys.filter { vaersData[it]!!.died }.count())}")
+    println("Non-fatal Injuries: ${"%,d".format(vaersData.keys.filter { !vaersData[it]!!.died }.count())}")
+    println(
+        "Hospitalization Required: ${
+            "%,d".format(vaersData.keys.filter { vaersData[it]!!.hospital }.count())
+        }"
+    )
+    println("ER Visit Required: ${"%,d".format(vaersData.keys.filter { vaersData[it]!!.erVisit }.count())}")
+    println(
+        "Life Threatening Injury: ${
+            "%,d".format(vaersData.keys.filter { vaersData[it]!!.lThreat!! }.count())
+        }"
+    )
+    println()
+}
+
+fun vaersDataMap(vaersDataMap: Map<Int, VaersData>, vaersVaxMap: Map<Int, VaersVax>): Map<Int, VaersData> {
+    val vaersData: MutableMap<Int, VaersData> = HashMap<Int, VaersData>()
     vaersVaxMap.keys.forEach {
         if (vaersDataMap.containsKey(it)) {
-            vaersDataMap[it]?.let { it1 -> covidVaersData.put(it, it1) }
+            vaersDataMap[it]?.let { it1 -> vaersData.put(it, it1) }
         }
     }
-    return covidVaersData
+    return vaersData
 }
 
-fun parseVaersVax(): Map<Int, VaersVax> {
+fun parseVaersVax(vaxType: List<VaxType>?): Map<Int, VaersVax> {
     val csvData = BufferedReader(FileReader("src/main/resources/datasets/VAERSVAX.csv"))
     val parser: CSVParser = CSVParser.parse(
         csvData, CSVFormat.RFC4180 //
@@ -118,7 +177,13 @@ fun parseVaersVax(): Map<Int, VaersVax> {
     val csvRecordStream = StreamSupport.stream(splitItr, false)
 
     val vaersVaxMap: Map<Int, VaersVax> = csvRecordStream
-        .filter(Predicate<CSVRecord> { VaxType.valueOf(it.get("VAX_TYPE")) == VaxType.COVID19 })
+        .filter(Predicate<CSVRecord> {
+            if (vaxType != null) {
+                vaxType!!.contains(VaxType.valueOf(it.get("VAX_TYPE")))
+            } else {
+                true
+            }
+        })
         .map {
             VaersVax(
                 it.get("VAERS_ID").toInt(),
@@ -138,7 +203,9 @@ fun parseVaersVax(): Map<Int, VaersVax> {
     return vaersVaxMap
 }
 
-fun parseVaersData(): Map<Int, VaersData> {
+fun parseVaersData(dateRange: Pair<LocalDate, LocalDate>?): Map<Int, VaersData> {
+    val startDate = if (dateRange == null) null else dateRange!!.first
+    val endDate = if (dateRange == null) null else dateRange!!.second
     val csvData = BufferedReader(FileReader("src/main/resources/datasets/VAERSData.csv"))
     val parser: CSVParser = CSVParser.parse(
         csvData, CSVFormat.RFC4180 //
@@ -187,6 +254,13 @@ fun parseVaersData(): Map<Int, VaersData> {
                 it.get("ER_ED_VISIT")?.toLowerCase() == "y",
                 it.get("ALLERGIES")
             )
+        }
+        .filter {
+            if (dateRange != null) {
+                if (it.recvDate == null) false else it.recvDate!! >= startDate && it.recvDate <= endDate
+            }  else {
+                true
+            }
         }
         .collect(Collectors.toList())
         .associateBy({ it.vaersId }, { it })
