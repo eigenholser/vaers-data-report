@@ -12,7 +12,7 @@ adverse events.
 
 Future developments may produce some tabular output.
 
-Sample output from data 2020 through April 13, 2021:
+Sample output from data 2020 through May 14, 2021:
 
     ******* All COVID19 Vaccine Adverse Events Reported *******
     Total: 192,588
