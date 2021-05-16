@@ -16,7 +16,7 @@ enum class VaxType {
     BCG,
     CHOL, COVID19,
     DF, DTAPIPVHIB, DTAPHEPBIP, DTAPIPV, DT, DTOX, DTP, DTAP,
-    FLU3, FLU4, FLUN3, FLUN4, FLUR3, FLUX, FLUC3, FLUC4, FLUR4, FLUA3, FLUA4,
+    FLU3, FLU4, FLUN3, FLUN4, FLUR3, FLUX, FLUXH1N1, FLUC3, FLUC4, FLUR4, FLUA3, FLUA4,
     HBHEPB, HEP, HEPA, HEPAB, HIBV, HPV2, HPV4, HPV9, HPVX,
     IPV,
     JEV1, JEVX,
@@ -93,6 +93,7 @@ fun main(args: Array<String>) {
     val covidVaersData = vaersDataMap(vaersDataMapCovid, vaersVaxMapCovid)
     val q12020VaersData = vaersDataMap(q12020vaersDataMapAll, vaersVaxMapAll)
     val q12021VaersDataCovid = vaersDataMap(q12021VaersDataMapCovid, vaersVaxMapCovid)
+
     covidReportSummary(covidVaersData)
     q12021CovidReportSummary(q12021VaersDataCovid)
     q12020ReportSummary(q12020VaersData)
@@ -179,7 +180,9 @@ fun parseVaersVax(vaxType: List<VaxType>?): Map<Int, VaersVax> {
     val vaersVaxMap: Map<Int, VaersVax> = csvRecordStream
         .filter(Predicate<CSVRecord> {
             if (vaxType != null) {
-                vaxType!!.contains(VaxType.valueOf(it.get("VAX_TYPE")))
+                vaxType!!.contains(VaxType.valueOf(
+                    it.get("VAX_TYPE").replace("(", "").replace(")", ""))
+                )
             } else {
                 true
             }
@@ -187,7 +190,7 @@ fun parseVaersVax(vaxType: List<VaxType>?): Map<Int, VaersVax> {
         .map {
             VaersVax(
                 it.get("VAERS_ID").toInt(),
-                VaxType.valueOf(it.get("VAX_TYPE")),
+                VaxType.valueOf(it.get("VAX_TYPE").replace("(", "").replace(")", "")),
                 it.get("VAX_MANU"),
                 it.get("VAX_LOT"),
                 it.get("VAX_DOSE_SERIES"),

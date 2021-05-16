@@ -32,5 +32,9 @@ build/
 ### VS Code ###
 .vscode/
 
+VAERSData.csv
+VAERSVAX.csv
+2020VAERSData.csv
+2020VAERSVAX.csv
 2021VAERSData.csv
 2021VAERSVAX.csv

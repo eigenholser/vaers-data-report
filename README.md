@@ -15,20 +15,20 @@ Future developments may produce some tabular output.
 Sample output from data 2020 through April 13, 2021:
 
     ******* All COVID19 Vaccine Adverse Events Reported *******
-    Total: 50,716
-    Deaths: 2,119
-    Non-fatal Injuries: 48,597
-    Hospitalization Required: 4,805
-    ER Visit Required: 29
-    Life Threatening Injury: 1,441
+    Total: 192,588
+    Deaths: 3,919
+    Non-fatal Injuries: 188,669
+    Hospitalization Required: 11,550
+    ER Visit Required: 37
+    Life Threatening Injury: 3,541
 
     ******* Q1 2021 COVID19 Vaccine Adverse Events Reported *******
-    Total: 40,044
-    Deaths: 2,103
-    Non-fatal Injuries: 37,941
-    Hospitalization Required: 4,665
-    ER Visit Required: 11
-    Life Threatening Injury: 1,373
+    Total: 146,005
+    Deaths: 2,420
+    Non-fatal Injuries: 143,585
+    Hospitalization Required: 6,627
+    ER Visit Required: 19
+    Life Threatening Injury: 1,944
 
     ******* Q1 2020 All Vaccine Adverse Events Reported *******
     Total: 8,300
@@ -51,7 +51,7 @@ data.
 
 These cannot be downloaded by machine because of the CAPTCHA. Drat!
 
-The VaxType enum may be incomplete. If so, just add the enum exposed in the parse 
+The VaxType enum may be incomplete. If so, just add the enum exposed in the parse
 exception and rebuild. If at first you don't succeed, try try again.
 
 ## Compile
